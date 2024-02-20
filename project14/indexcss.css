@@ -1,0 +1,22 @@
+.form-group {
+    display: flex;
+    flex-direction: row;
+ margin-bottom: 10px;
+}
+
+.form-label {
+ flex-basis: 16%;
+ margin-left: 100px;
+}
+
+.form-input {
+    flex-basis: 60%;
+}
+
+.form-input-option{
+    margin-left: 200px;
+}
+
+.form-input-checkbox{
+    margin-left: 200px;
+}

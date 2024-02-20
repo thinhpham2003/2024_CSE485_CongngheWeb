@@ -14,66 +14,54 @@
     <?php
     $courses = [
         [
-            'image' => "https://img.freepik.com/free-photo/cute-domestic-kitten-sits-window-staring-outside-generative-ai_188544-12519.jpg",
-            'title' => 'Học viên quốc tế',
-            'description' => 'Chương trình đào tạo chính thức tại Việt Nam từ
-        Aptech Global. Phát triển nghề nghiệp sinh viên IT như một lập trình viên 
-        quốc tế.',
+            'image' => "https://aptech.vn/wp-content/uploads/2024/01/banner-1900x750-1.png.webp",
+            'title' => 'LẬP TRÌNH VIÊN QUỐC TẾ',
+            'description' => 'Chương trình đào tạo chuẩn quốc tế và toàn diện. Phù hợp với học sinh tốt nghiệp THPT, sinh viên và người định hướng theo nghề lập trình chuyên nghiệp.',
             'fee' => '15.000.000 VND',
             'start_date' => '2/2/24',
             'duration' => '2 - 2.5 năm'
         ],
 
         [
-            'image' => "https://img.freepik.com/free-photo/cute-domestic-kitten-sits-window-staring-outside-generative-ai_188544-12519.jpg",
-            'title' => 'Học 2 quốc tế',
-            'description' => 'Chương trình đào tạo chính thức tại Việt Nam từ
-        Aptech Global. Phát triển nghề nghiệp sinh viên IT như một lập trình viên 
-        quốc tế.',
+            'image' => "https://aptech.vn/wp-content/uploads/2023/08/banner-1920x750_ITT.png.webp",
+            'title' => 'LẬP TRÌNH WEB FULLSTACK',
+            'description' => 'Khóa học phù hợp với người bắt đầu lập trình hoặc người chuyển nghề. Trang bị từ frontend đến backend, xây dựng website hoàn chỉnh sau khóa học.',
             'fee' => '15.000.000 VND',
             'start_date' => '2/2/24',
             'duration' => '2 - 2.5 năm'
         ],
 
         [
-            'image' => "https://img.freepik.com/free-photo/cute-domestic-kitten-sits-window-staring-outside-generative-ai_188544-12519.jpg",
-            'title' => 'Học 3 quốc tế',
-            'description' => 'Chương trình đào tạo chính thức tại Việt Nam từ
-        Aptech Global. Phát triển nghề nghiệp sinh viên IT như một lập trình viên 
-        quốc tế.',
+            'image' => "https://aptech.vn/wp-content/uploads/2021/05/lap-trinh-java.png.webp",
+            'title' => 'LẬP TRÌNH JAVA FULLSTACK',
+            'description' => 'Phát triển ứng dụng web từ cơ bản đến nâng cao bằng Java, các ứng dụng doanh nghiệp sử dụng J2EE, Servlet, JSP, Spring Framework, EJB,...',
             'fee' => '15.000.000 VND',
             'start_date' => '2/2/24',
             'duration' => '2 - 2.5 năm'
         ],
 
         [
-            'image' => "https://img.freepik.com/free-photo/cute-domestic-kitten-sits-window-staring-outside-generative-ai_188544-12519.jpg",
-            'title' => 'Học 4 quốc tế',
-            'description' => 'Chương trình đào tạo chính thức tại Việt Nam từ
-        Aptech Global. Phát triển nghề nghiệp sinh viên IT như một lập trình viên 
-        quốc tế.',
+            'image' => "https://aptech.vn/wp-content/uploads/2021/05/lap-trinh-java.png.webp",
+            'title' => 'LẬP TRÌNH PHP & LARAVEL',
+            'description' => 'PHP là một trong các ngôn ngữ thiết kế web mạnh nhất. Khóa học trang bị kỹ năng xây dựng web hoàn chỉnh sử dụng PHP kết hợp Laravel Framework.',
             'fee' => '15.000.000 VND',
             'start_date' => '2/2/24',
             'duration' => '2 - 2.5 năm'
         ],
 
         [
-            'image' => "https://img.freepik.com/free-photo/cute-domestic-kitten-sits-window-staring-outside-generative-ai_188544-12519.jpg",
-            'title' => 'Học 5 quốc tế',
-            'description' => 'Chương trình đào tạo chính thức tại Việt Nam từ
-        Aptech Global. Phát triển nghề nghiệp sinh viên IT như một lập trình viên 
-        quốc tế.',
+            'image' => "https://aptech.vn/wp-content/uploads/2021/05/lap-trinh-.net_.png.webp",
+            'title' => 'KHOÁ HỌC LẬP TRÌNH .NET',
+            'description' => 'Phát triển ứng dụng web sử dụng nền tảng ASP.NET Core MVC. Để học tốt khóa học yêu cầu học viên đã có kiến thức C# và Frontend.',
             'fee' => '15.000.000 VND',
             'start_date' => '2/2/24',
             'duration' => '2 - 2.5 năm'
         ],
 
         [
-            'image' => "https://img.freepik.com/free-photo/cute-domestic-kitten-sits-window-staring-outside-generative-ai_188544-12519.jpg",
-            'title' => 'Học 6 quốc tế',
-            'description' => 'Chương trình đào tạo chính thức tại Việt Nam từ
-        Aptech Global. Phát triển nghề nghiệp sinh viên IT như một lập trình viên 
-        quốc tế.',
+            'image' => "https://aptech.vn/wp-content/uploads/2021/06/lap-trinh-csdl-voi-sql.png.webp",
+            'title' => 'LẬP TRÌNH SQL SEVER',
+            'description' => 'Trang bị những kiến thức nền tảng vững chắc về SQL Server như các kỹ thuật: lọc dữ liệu, phân tích, thiết kế và quản trị cơ sở dữ liệu,...',
             'fee' => '15.000.000 VND',
             'start_date' => '2/2/24',
             'duration' => '2 - 2.5 năm'
