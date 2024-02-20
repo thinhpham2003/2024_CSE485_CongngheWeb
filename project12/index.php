@@ -11,6 +11,7 @@
 </head>
 <body>
 <?php
+#Hello
 $navItems = [
     "GIỚI THIỆU",
     "TIN TỨC & THÔNG BÁO",
