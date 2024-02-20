@@ -1,0 +1,61 @@
+.box{
+    width: 30%;
+    height: 100%;
+    margin-left: 35%;
+    padding: 20px;
+    border: 10px lightgray;
+    border-style: solid;
+    display: grid;
+}
+
+.form {
+    display: grid;
+}
+
+ .box label{
+     font-weight: bold;
+ }
+
+ .box h3{
+     border-bottom: 1px gray;
+     border-bottom-style: solid;
+ }
+
+.form-group{
+    display: grid;
+    grid-template-columns: 150px auto;
+    margin-top: 10px;
+}
+.form-group-radio{
+    display: grid;
+    grid-template-columns: 150px auto;
+    grid-template-rows: auto auto auto auto;
+    margin-top: 10px;
+}
+.form-group-radio input{
+    width: 20px;
+}
+.form-group input {
+    width: calc(90%);
+}
+.select_style{
+    width: 40%;
+    border-radius: 5px;
+}
+.form-group-checkbox{
+    display: grid;
+    grid-template-columns: 150px auto;
+    grid-template-rows: auto;
+    margin-top: 10px;
+}
+.button{
+    color: white;
+    background: black;
+}
+.input-submit{
+    color: white;
+    background: dimgrey;
+    max-width: 100px;
+    height: 30%;
+}
+
