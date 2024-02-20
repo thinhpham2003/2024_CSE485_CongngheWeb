@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>project14</title>
     <link rel="stylesheet" href="style.css" >
+
 </head>
 <body class = "form-body">
 <h4>Basic info</h4><hr>
@@ -177,7 +178,7 @@ Islands", "Brunei",
 
         <div class="custom-checkbox">
             <label class= "form-label ">Active?</label>
-            <input class="custom-control-input control-input" value="0" type="checkbox" style="20px"  name="active">
+            <input class="custom-control-input control-input" value="0" type="checkbox"  name="active">
         </div>
         <form action="submit_form.php" method="post">
             <div class="g-recaptcha" data-sitekey="your-recaptcha-site-key" style="5px"></div>

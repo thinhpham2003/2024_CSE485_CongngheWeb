@@ -1,0 +1,32 @@
+.course {
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 20px;
+    width: 350px;
+    margin-left: 30px;
+}
+.course h2 {
+    color: #333;
+    font-family: Arial;
+    font-size: 15px;
+}
+.course p {
+    color: #666;
+}
+.images{
+    width: 350px;
+    height: 150px;
+}
+.icon{
+    margin-right: 10px;
+    color: darkred;
+}
+
+h3{
+    font-family: Arial;
+    font-size: 17px;
+    color: darkred;
+    border-left: 3px solid darkred;
+    padding-left: 10px;
+    margin-left: 40px;
+}
