@@ -1,0 +1,44 @@
+.form-group {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px; /* Khoảng cách giữa các dòng */
+}
+.form-label {
+    flex-basis: 16%; /* Chiều rộng của label */
+    margin-left: 100px;
+}
+.form-group input, .form-group select, .form-group .custom-control {
+    flex-basis: 60%; /* Chiều rộng của input */
+}
+.gender-label{
+    margin-left: 100px;
+}
+.custom-radio{
+    margin-bottom: 10px
+}
+.custom-control{
+    margin-left: 250px;  /* Gender */
+}
+.control-input{
+    margin-left: 100px; /*active*/
+}
+.form-footer{
+    display: flex;
+    justify-content: space-between;
+}
+.form-body{
+    border: 1px solid black ;
+    width: 80%;
+
+}
+.nav-button {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+.form-group-children{
+    display: flex;
+    flex-direction: column;
+}
