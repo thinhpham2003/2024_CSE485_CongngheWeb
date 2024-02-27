@@ -14,21 +14,28 @@
 <?php
 
 $navItems = [
-    "GIỚI THIỆU",
-    "TIN TỨC & THÔNG BÁO",
-    "TUYỂN SINH",
-    "ĐÀO TẠO",
-    "NGHIÊN CỨU",
-    "ĐỐI NGOẠI",
-    "VĂN BẢN",
-    "SINH VIÊN",
-    "LIÊN HỆ"
+    "GIỚI THIỆU" => ["Tổng quan","Cơ sở vật chất"],
+    "TIN TỨC & THÔNG BÁO" => ["Tin tức", "Thông báo"],
+    "TUYỂN SINH" => [],
+    "ĐÀO TẠO" => [],
+    "NGHIÊN CỨU" => ["Nghiên cứu khoa học"],
+    "ĐỐI NGOẠI" => [],
+    "VĂN BẢN" => ["Văn bản hướng dẫn"],
+    "SINH VIÊN" => [],
+    "LIÊN HỆ" => []
 ];
 echo '<nav><ul>';
-
-echo '<li><i class="fas fa-home"></i></li>';
-foreach ($navItems as $item) {
-    echo "<li><a href='#'>$item</a></li>";
+echo '<li><i class="fas fa-home" style="color: white"></i></li>';
+foreach ($navItems as $key => $value) {
+    echo "<li class='item'><a>$key</a>";
+    if (count($value) > 0) {
+        echo "<ul class='sub-menu'>";
+        foreach ($value as $subItem) {
+            echo "<li><a>$subItem</a></li>";
+        }
+        echo "</ul>";
+    }
+    echo "</li>";
 }
 echo '</ul></nav>';
 ?>

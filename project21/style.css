@@ -1,0 +1,12 @@
+.images{
+    width: 210px;
+    height: 150px;
+}
+.product-list{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.product{
+    text-align: center;
+}
