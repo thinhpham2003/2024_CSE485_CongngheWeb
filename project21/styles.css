@@ -1,0 +1,29 @@
+.product_class  {
+    display: flex;
+    padding: 20px;
+}
+
+.product_item {
+    align-content: center;
+    width: 19%;
+    margin-right: 1%;
+    text-align: center;
+}
+.pagination{
+    display: flex;
+    padding: 20px;
+}
+.pagination .item{
+    #border-bottom: black solid;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+.active {
+    background-color: #4CAF50 !important;
+    color: white;
+}
+
+.no-active {
+    color: black;
+    text-decoration: none;
+}
