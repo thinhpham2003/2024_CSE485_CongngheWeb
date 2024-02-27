@@ -1,0 +1,20 @@
+form {
+    width: 50%;
+    margin-left: 25%;
+    text-align: center;
+
+}
+
+form h2{
+    text-align: center;
+}
+form input{
+    margin-top: 20px;
+}
+form button{
+    margin-top: 20px;
+}
+
+.avatar img{
+    width: 225px;
+}
