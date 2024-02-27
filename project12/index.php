@@ -17,11 +17,11 @@ $navItems = [
     "GIỚI THIỆU" => ["Tổng quan","Cơ sở vật chất"],
     "TIN TỨC & THÔNG BÁO" => ["Tin tức", "Thông báo"],
     "TUYỂN SINH" => [],
-    "ĐÀO TẠO" => [],
-    "NGHIÊN CỨU" => ["Nghiên cứu khoa học"],
+    "ĐÀO TẠO" => ["Thạc sĩ","Đại học chính quy"],
+    "NGHIÊN CỨU" => ["Nghiên cứu khoa học","Sở hữu trí tuệ"],
     "ĐỐI NGOẠI" => [],
-    "VĂN BẢN" => ["Văn bản hướng dẫn"],
-    "SINH VIÊN" => [],
+    "VĂN BẢN" => [],
+    "SINH VIÊN" => ["Hỗ trợ sinh viên","Học Phí"],
     "LIÊN HỆ" => []
 ];
 echo '<nav><ul>';

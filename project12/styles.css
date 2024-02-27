@@ -7,24 +7,22 @@
 
 nav {
     display: flex;
-    align-items: center;
-    width: 90%;
+    justify-items: center;
+    justify-content: space-between;
+    width: 100%;
     background-color: blue;
 }
 
 li {
-    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    justify-items: center;
     display: inline-block;
     cursor: pointer;
     padding: 5px 10px;
     font-family: Arial;
+    font-size: 13px;
     margin-left: 8px;
-}
-
-img {
-    width: 20px;
-    margin: 0 20px;
-    cursor: pointer;
 }
 
 .item {
@@ -34,13 +32,14 @@ img {
 }
 
 .sub-menu {
-    min-width: 100%;
+    min-width: 140%;
     position: absolute;
     top: 100%;
     left: 0;
     background-color: deepskyblue;
     display: none;
     flex-direction: column;
+    text-align: left;
     color: white;
 }
 
