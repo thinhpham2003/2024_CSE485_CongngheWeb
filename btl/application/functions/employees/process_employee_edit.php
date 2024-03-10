@@ -1,5 +1,5 @@
 <?php
-include "../models/Employee.php";
+include "../../models/Employee.php";
 if ($_SERVER['REQUEST_METHOD'] == "POST"){
     $id = $_POST['id'];
     $name = $_POST['fullName'];
@@ -8,11 +8,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
     $mobilePhone = $_POST['mobilePhone'];
     $position = $_POST['position'];
     //$avtar = $_POST['id'];
+    echo $name.",",$address;
 
-    if (updateEmployee($id,$name,$address,$email,$mobilePhone,$position)){
-        header("Location: ../../views/profile.php?id={$id}&mess=Sửa thành công!");
+    if (updateEmployee($id,$name,$address,$email,$mobilePhone,$position, "")){
+        header("Location: ../../views/employees/profile.php?id={$id}&mess=Sửa thành công!");
     }else{
-        header("Location: ../../views/edit.php?id={$id}&err=Lỗi!");
+        header("Location: ../../views/employees/edit.php?id={$id}&err=Lỗi!");
     }
 }
 ?>

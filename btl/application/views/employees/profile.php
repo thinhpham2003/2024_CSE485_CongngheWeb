@@ -1,6 +1,14 @@
 <?php
 include '../../models/Employee.php';
+
+//session_start();
+//if(!isset($_SESSION['user_id']) || !isset($_COOKIE['logged_in'])){
+//    header("Location: ../../login.php");
+//}
+//$id = $_SESSION['user_id'];
+//$employee = getEmployeeById($id);
 $employees = getEmployees();
+$user_employee = getEmployeeById(1);
 ?>
 <!doctype html>
 <html lang="en">
@@ -34,43 +42,56 @@ $employees = getEmployees();
                             <a class="nav-link active" aria-current="page" href="#">Employees</a>
                         </li>
                     </ul>
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    <a href="my_profile.php"><button class="btn btn-primary me-3"><i class="bi bi-eye"></i> <?=$user_employee["FullName"]?></button> </a>
+                    <form class="d-flex" role="search" action="find.php" method="post">
+                        <input class="form-control me-2" name='find' type="text" placeholder="Nhập tên, email, đơn vị đang công tác" '>
+                        <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
                     </form>
                 </div>
             </div>
         </nav>
     </header>
     <main>
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-        <div class="container mt-4" >
-            <div class="row">
-                <?php foreach ($employees as $e): ?>
-                    <div class="col-xl-3 col-sm-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                    <div><img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="avatar-md rounded-circle img-thumbnail" /></div>
-                                    <div class="flex-1 ms-3">
-                                        <h5 class="font-size-14 mb-1"><a href="#" class="text-dark"><?= $e['fullName']?></a></h5>
-                                        <span><?= $e['position']?></span>
-                                    </div>
-                                </div>
-                                <div class="mt-3 pt-1">
-                                    <p class="text-muted mb-0"><i class="mdi mdi-phone font-size-15 align-middle pe-2 text-primary"></i> <?= $e['mobilePhone']?></p>
-                                    <p class="text-muted mb-0 mt-2"><i class="mdi mdi-email font-size-15 align-middle pe-2 text-primary"></i> <?= $e['email']?></p>
-                                    <p class="text-muted mb-0 mt-2"><i class="mdi mdi-google-maps font-size-15 align-middle pe-2 text-primary"></i><?= $e['address']?></p>
-                                </div>
-                                <div class="d-flex gap-2 pt-4">
-                                    <a href="employees_profile.php?id=<?= $e["employeeID"] ?>"><button type="button" class="btn btn-primary btn-sm w-50"><i class="bx bx-user me-1"></i> Profile</button></a>
-                                </div>
-                            </div>
-                        </div>
+        <h1 class="text-center">Thông tin tài khoản người dùng</h1>
+        <form class="ms-5 me-5">
+            <?php
+            if (isset($_GET['mess'])):?>
+                <div class="alert alert-success" role="alert">
+                    <?=$_GET['mess'];?>
+                </div>
+            <?php endif; ?>
+            <?php
+            if (isset($_GET['id'])){
+                $id = $_GET['id'];
+                $employee = getEmployeeById($id);
+                ?>
+                <div class="d-flex justify-content-center"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="avatar-md rounded-circle img-thumbnail " style="width: 250px" /></div>
+                    <div class="mb-3">
+                        <label for="disabledTextInput" class="form-label">Id:</label>
+                        <input type="text" id="disabledTextInput" class="form-control" value="<?=$employee['EmployeeID']?>" readonly>
                     </div>
-                <?php endforeach;?>
-            </div>
-        </div>
+                    <div class="mb-3">
+                        <label for="disabledTextInput" class="form-label">Tên nhân viên:</label>
+                        <input type="text" id="disabledTextInput" class="form-control" value="<?=$employee['FullName']?>" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="disabledTextInput" class="form-label">Địa chỉ:</label>
+                        <input type="text" id="disabledTextInput" class="form-control" value="<?=$employee['Address']?>" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="disabledTextInput" class="form-label">Thư điện tử:</label>
+                        <input type="text" id="disabledTextInput" class="form-control" value="<?=$employee['Email']?>" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="disabledTextInput" class="form-label">Số điện thoại:</label>
+                        <input type="text" id="disabledTextInput" class="form-control" value="<?=$employee['MobilePhone']?>" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="disabledTextInput" class="form-label">Chức vụ:</label>
+                        <input type="text" id="disabledTextInput" class="form-control" value="<?=$employee['Position']?>" readonly>
+                    </div>
+            <?php } ?>
+        </form>
     </main>
     <footer>
 
