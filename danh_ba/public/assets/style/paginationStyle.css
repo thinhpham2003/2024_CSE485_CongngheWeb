@@ -1,0 +1,19 @@
+.pagination a, span{
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    color: #333;
+    text-decoration: none;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+.pagination a:hover {
+    background-color: #eee;
+}
+
+.pagination .active {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
