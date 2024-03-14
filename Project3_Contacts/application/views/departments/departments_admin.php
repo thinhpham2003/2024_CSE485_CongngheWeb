@@ -41,10 +41,10 @@ $departments_on_page = array_slice($departments, $start, $items_per_page);
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="../departments/departments_admin.php">Danh bạ đơn vị</a>
+                            <a class="nav-link active" aria-current="page" href="../departments/departments_admin.php">Quản lý đơn vị</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="../employees/employees_admin.php">Danh bạ nhân viên</a>
+                            <a class="nav-link" aria-current="page" href="../employees/employees_admin.php">Quản lý nhân viên</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="../users/users_list.php">Quản lý người dùng</a>
