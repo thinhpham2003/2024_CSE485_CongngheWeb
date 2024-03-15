@@ -37,7 +37,7 @@ $departments_on_page = array_slice($departments, $start, $items_per_page);
     <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
-                <a class="navbar-brand text-primary" href="#">Admin</a>
+                <a class="navbar-brand text-primary" href="#">Danh bạ</a>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
@@ -61,7 +61,7 @@ $departments_on_page = array_slice($departments, $start, $items_per_page);
             </div>
         <?php endif; ?>
         <h2 class="text-center text-primary">Danh bạ đơn vị</h2>
-        <form class="d-flex" action="departments_search.php" method="post" style="max-width: 400px;">
+        <form class="d-flex" action="departments_search_regular.php" method="post" style="max-width: 400px;">
             <input class="form-control me-2" type="text" name="search" placeholder="Nhập thông tin tìm kiếm">
             <input type="hidden" name="action" value="search_admin">
             <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i></button>

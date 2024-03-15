@@ -58,6 +58,15 @@ function userAdd(){
     }
 }
 
+function getUserId($id) {
+    $conn = connectDB();
+    $sql = "SELECT * FROM users WHERE EmployeeID = '".$id."';";
+    $result = mysqli_query($conn, $sql);
+    $user = mysqli_fetch_assoc($result);
+    mysqli_close($conn);
+    return $user;
+}
+
 ?>
 
 

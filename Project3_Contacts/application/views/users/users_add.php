@@ -1,5 +1,4 @@
 <?php
-require_once '../../functions/getUsers.php';
 include '../../models/Employee.php';
 session_start();
 if(!isset($_SESSION['user_id']) || !isset($_COOKIE['logged_in']))
@@ -16,7 +15,7 @@ $employee = getEmployeeById($id);
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>users</title>
+    <title>Thêm người dùng</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
@@ -31,7 +30,7 @@ $employee = getEmployeeById($id);
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="../../views/departments/departments_admin.php">Quản lý phòng ban</a>
+                        <a class="nav-link" href="../../views/departments/departments_admin.php">Quản lý đơn vị</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../../views/employees/employees_admin.php">Quản lý nhân viên</a>
@@ -70,8 +69,12 @@ $employee = getEmployeeById($id);
                 <input type="text" value="" class="form-control" id="password" name="password">
             </div>
             <div class="mb-3">
-                <label for="role" class="form-label">Vai trò</label>
-                <input type="text" value="" class="form-control" id="role" name="role">
+                <label for="role" class="form-label">Vai trò:</label>
+                <select class="form-select" id="role" name="Role">
+                    <option value=""></option>
+                    <option value="admin">Quản trị viên</option>
+                    <option value="regular">Người dùng thông thường</option>
+                </select>
             </div>
             <button type="submit" class="btn btn-primary">Thêm</button>
         </form>

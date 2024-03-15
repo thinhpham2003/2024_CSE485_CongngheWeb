@@ -24,7 +24,7 @@ function getEmployeeById($id) {
     mysqli_close($conn);
     return $employee;
 }
-function addEmployee($name, $address, $email, $MobilePhone, $Position, $Avatar) {
+function addEmployee($name, $address, $email, $MobilePhone, $Position, $DepartmentID, $Avatar) {
     $conn = connectDB();
     $sql = "SELECT * FROM employees WHERE Email = '".$email."' OR MobilePhone='".$MobilePhone."'";
     $result = mysqli_query($conn, $sql);
@@ -32,7 +32,7 @@ function addEmployee($name, $address, $email, $MobilePhone, $Position, $Avatar) 
         mysqli_close($conn);
         return false;
     }else {
-        $sql1 = "INSERT INTO employees(FullName,Address,Email,MobilePhone,Position, Avatar) VALUES ('" . $name . "','" . $address . "','" .$email . "','" .$MobilePhone . "','" .$Position . "','" . $Avatar . "')";
+        $sql1 = "INSERT INTO employees(FullName,Address,Email,MobilePhone,Position, Avatar, DepartmentID) VALUES ('" . $name . "','" . $address . "','" .$email . "','" .$MobilePhone . "','" .$Position . "','" . $Avatar . "','".$DepartmentID."')";
         echo $sql1;
         $result1 = mysqli_query($conn, $sql1);
         if ($result1) {
@@ -45,7 +45,19 @@ function addEmployee($name, $address, $email, $MobilePhone, $Position, $Avatar) 
     }
 }
 
-
+function deleteEmployee($id)
+{
+    $conn = connectDB();
+    $sql = "DELETE FROM employees WHERE employeeID = {$id}";
+    $result = mysqli_query($conn, $sql);
+    if ($result){
+        mysqli_close($conn);
+        return true;
+    }else{
+        mysqli_close($conn);
+        return false;
+    }
+}
 
 function isEmployeeExist($id) {
     $conn = connectDB();
@@ -54,10 +66,10 @@ function isEmployeeExist($id) {
     return ($result)?true:false;
 }
 
-function updateEmployee($id, $name, $address, $email, $MobilePhone, $Position, $Avatar)
+function updateEmployee($id, $name, $address, $email, $MobilePhone, $Position,$DepartmentID, $Avatar)
 {
     $conn = connectDB();
-        $sql1 = "UPDATE employees SET FullName = '" . $name . "', Address = '" . $address . "', email = '" . $email . "', MobilePhone = '" . $MobilePhone . "', Avatar = '" . $Avatar . "' WHERE EmployeeID ='" . $id . "'";
+        $sql1 = "UPDATE employees SET FullName = '" . $name . "', Address = '" . $address . "', email = '" . $email . "', MobilePhone = '" . $MobilePhone . "', Position = '" .$Position. "', DepartmentID = '" .$DepartmentID. "', Avatar = '" . $Avatar . "' WHERE EmployeeID ='" . $id . "'";
         //echo $sql1;
         $result1 = mysqli_query($conn, $sql1);
         if ($result1) {

@@ -1,5 +1,7 @@
 <?php
 include '../../models/Employee.php';
+include '../../functions/getDepartments.php';
+include '../../functions/getDepartmentByID.php';
 
 session_start();
 if(!isset($_SESSION['user_id']) || !isset($_COOKIE['logged_in'])){
@@ -35,11 +37,10 @@ $employees = getEmployees();
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="<?= isset($_GET['action']) && $_GET['action'] == "admin_edit" ? "../departments/departments_admin.php" : "../departments/departments_regular.php";?>">Danh bạ đơn vị</a>
-                        </li>
+                            <a class="nav-link" aria-current="page" href="../departments/departments_regular.php">Danh bạ đơn vị</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="<?= isset($_GET['action']) && $_GET['action'] == "admin_edit" ? "employees_admin.php" : "employees_regular.php";?>">Danh bạ nhân viên</a>
+                            <a class="nav-link active" aria-current="page" href="employees_regular.php">Danh bạ nhân viên</a>
                         </li>
                     </ul>
                     <a href="my_profile.php"><button class="btn btn-primary me-3"><i class="bi bi-eye"></i> <?=$employee["FullName"]?></button> </a>
@@ -87,6 +88,10 @@ $employees = getEmployees();
                         <label for="disabledTextInput" class="form-label">Chức vụ:</label>
                         <input type="text" id="disabledTextInput" class="form-control" value="<?=$employee['Position']?>" readonly>
                     </div>
+                <div class="mb-3">
+                    <label for="disabledTextInput" class="form-label">Đơn vị:</label>
+                    <input type="text" id="disabledTextInput" class="form-control" value="<?=getDepartmentByID($employee['DepartmentID'])['DepartmentName']?>" readonly>
+                </div>
             <?php } ?>
         </form>
     </main>

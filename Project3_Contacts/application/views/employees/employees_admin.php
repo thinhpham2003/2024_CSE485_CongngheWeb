@@ -1,5 +1,5 @@
 <?php
-require_once '../../models/Employee.php';
+include '../../models/Employee.php';
 
 session_start();
 if (!isset($_SESSION['user_id']) || !isset($_COOKIE['logged_in'])) {
@@ -29,7 +29,7 @@ $employees_on_page = array_slice($employees, $start, $items_per_page);
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Danh bạ nhân viên cho quản trị</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.0/css/boxicons.min.css" integrity="sha512-pVCM5+SN2+qwj36KonHToF2p1oIvoU3bsqxphdOIWMYmgr4ZqD3t5DjKvvetKhXGc/ZG5REYTT6ltKfExEei/Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css" integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -55,11 +55,10 @@ $employees_on_page = array_slice($employees, $start, $items_per_page);
                             <a class="nav-link" href="../users/users_list.php">Quản lý người dùng</a>
                         </li>
                     </ul>
-                    <a href="my_profile.php"><button class="btn btn-primary me-3"><i class="bi bi-eye"></i> <?=$employee["FullName"]?></button> </a>
+                    <a href="my_profile_admin.php"><button class="btn btn-primary me-3"><i class="bi bi-eye"></i> <?=$employee["FullName"]?></button> </a>
                     <a href="../../functions/logout.php" class="btn btn-danger">Đăng xuất</a>
                 </div>
             </div>
-
         </nav>
     </header>
     <main>
@@ -69,15 +68,21 @@ $employees_on_page = array_slice($employees, $start, $items_per_page);
                 <?=$_GET['mess'];?>
             </div>
         <?php endif; ?>
+        <?php
+        if (isset($_GET['err'])):?>
+            <div class="alert alert-danger" role="alert">
+                <?=$_GET['err'];?>
+            </div>
+        <?php endif; ?>
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
         <h2 class="text-center text-primary">Danh bạ nhân viên</h2>
-        <form class="d-flex" role="search" action="employees_search.php" method="post" style="max-width: 400px;">
-            <input class="form-control" name='find' type="text" placeholder="Nhập thông tin tìm kiếm">
+        <form class="d-flex" role="search" action="employees_search_admin.php" method="post" style="max-width: 400px;">
+            <input class="form-control me-2" name='find' type="text" placeholder="Nhập thông tin tìm kiếm">
             <input type="hidden" name="action" value="search_admin">
             <button class="btn btn-primary" type="submit" style="padding: 5px 10px;"><i class="bi bi-search" style="font-size: 18px;"></i></button>
         </form>
         <div style="margin-top: 15px"></div>
-        <button class="buttonFunction" onclick=window.location.href='employees_add.php'>Thêm</button>
+        <button class="btn btn-primary" onclick=window.location.href='employees_add.php'>Thêm mới</button>
         <div class="container-fluid">
             <div class="container-fluid mt-4">
                 <div class="row">
@@ -93,21 +98,21 @@ $employees_on_page = array_slice($employees, $start, $items_per_page);
                                         </div>
                                     </div>
                                     <div class="mt-3 pt-1">
-                                        <p class="text-muted mb-0"><i class="mdi mdi-phone font-size-15 align-middle pe-2 text-primary"></i> <?= $e['MobilePhone']?></p>
-                                        <p class="text-muted mb-0 mt-2"><i class="mdi mdi-email font-size-15 align-middle pe-2 text-primary"></i> <?= $e['Email']?></p>
+                                        <p class="text-muted mb-0"><i class="bi bi-telephone-fill font-size-15 align-middle pe-2 text-primary"></i> <?= $e['MobilePhone']?></p>
+                                        <p class="text-muted mb-0 mt-2"><i class="bi bi-envelope-fill font-size-15 align-middle pe-2 text-primary"></i> <?= $e['Email']?></p>
                                         <p class="text-muted mb-0 mt-2"><i class="mdi mdi-google-maps font-size-15 align-middle pe-2 text-primary"></i><?= $e['Address']?></p>
                                     </div>
-                                    <div class=" gap-2 pt-4">
-                                        <a href="profile.php?id=<?= $e["EmployeeID"]?>"><button type="button" class="btn btn-primary btn-sm w-50"><i class="bx bx-user me-1"></i> Thông tin</button></a>
-                                        <a href="employees_edit.php?id=<?= $e['EmployeeID'] ?>" class="btn btn-warning btn-sm w-50"><i class="bi bi-pencil-fill"></i> Sửa</a>
-                                        <a href="../../functions/deleteEmployee.php?id=<?= $e['EmployeeID']?>" class="btn btn-danger btn-sm w-50" onclick="return confirm('Bạn có chắc chắn muốn xoá đơn vị này không?')"><i class="bi bi-trash3-fill"></i> Xoá</a>
+                                    <div class=" gap-2 pt-4 d-flex">
+                                        <a href="profile_admin.php?id=<?= $e["EmployeeID"]?>"><button type="button" class="btn btn-primary"><i class="bx bx-user me-1"></i></button></a>
+                                        <a href="employees_edit_admin.php?id=<?= $e["EmployeeID"]?>"><button type="button" class="btn btn-warning"><i class="bi bi-pencil-fill"></i></button></a>
+                                        <a href="../../functions/employees/process_employee_delete.php?id=<?= $e["EmployeeID"]?>" onclick="return confirm('Bạn có chắc chắn muốn xoá nhân viên này không?')"><button type="button" class="btn btn-danger"><i class="bi bi-trash3-fill"></i></button></a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     <?php endforeach; ?>
                 </div>
-            </div>
+                </div>
                 <div class="container" style="margin-top: 20px">
                     <ul class="pagination justify-content-center">
                         <?php for ($page = 1; $page <= $total_pages; $page++): ?>

@@ -6,9 +6,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
     $email = $_POST['Email'];
     $mobilePhone = $_POST['MobilePhone'];
     $position = $_POST['Position'];
+    $departmentID = $_POST['DepartmentID'];
     $avtar = $_POST['Avatar'];
 
-    if (addEmployee($name,$address,$email,$mobilePhone,$position, $avtar)){
+    if (addEmployee($name,$address,$email,$mobilePhone,$position,$departmentID ,$avtar)){
         header("Location: ../../views/employees/employees_admin.php?mess=Thêm thành công!");
     }else{
         header("Location: ../../views/employees/add.php?err=Lỗi!");

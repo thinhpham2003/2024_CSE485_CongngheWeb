@@ -24,7 +24,7 @@ $currentPageItems = array_slice($users, ($currentPage - 1) * $itemsPerPage, $ite
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>users</title>
+    <title>Danh sách người dùng</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
@@ -39,7 +39,7 @@ $currentPageItems = array_slice($users, ($currentPage - 1) * $itemsPerPage, $ite
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="../../views/departments/departments_admin.php">Quản lý phòng ban</a>
+                        <a class="nav-link" href="../../views/departments/departments_admin.php">Quản lý đơn vị</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../../views/employees/employees_admin.php">Quản lý nhân viên</a>
@@ -73,7 +73,6 @@ $currentPageItems = array_slice($users, ($currentPage - 1) * $itemsPerPage, $ite
                 <th scope="col">STT</th>
                 <th scope="col">Tên</th>
                 <th scope="col">Vai trò</th>
-                <th scope="col" class="text-center" >Mật khẩu</th>
                 <th scope="col" class="text-center" >Mã nhân viên</th>
                 <th scope="col">Sửa</th>
                 <th scope="col">Xoá</th>
@@ -86,13 +85,12 @@ $currentPageItems = array_slice($users, ($currentPage - 1) * $itemsPerPage, $ite
                     <th><?= ++$i ?></th>
                     <td><?= $user['Username'] ?></td>
                     <td><?= $user['Role'] ?></td>
-                    <td class="text-center"><?= $user['Password'] ?></td>
                     <td class="text-center" ><?= $user['EmployeeID'] ?></td>
                     <td>
                         <a href="users_edit.php?username=<?= $user['Username'] ?>" class="btn btn-warning"><i class="bi bi-pencil-fill"></i></a>
                     </td>
                     <td>
-                        <a href="../../functions/deleteUser.php?username=<?= $user['Username'] ?>" class="btn btn-danger"><i class="bi bi-trash3-fill"></i></a>
+                        <a href="../../functions/deleteUser.php?username=<?= $user['Username'] ?>" onclick="return confirm('Bạn có chắc chắn muốn xoá đơn vị này không?')" class="btn btn-danger"><i class="bi bi-trash3-fill"></i></a>
                     </td>
                 </tr>
             <?php endforeach; ?>

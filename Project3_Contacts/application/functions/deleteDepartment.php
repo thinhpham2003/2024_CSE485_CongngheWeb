@@ -17,6 +17,7 @@ function deleteEmployeesInDepartment($departmentID) {
     if (!$result) {
         die('Lỗi khi xóa nhân viên: ' . mysqli_error($conn));
     }
+
     mysqli_close($conn);
 }
 
@@ -39,12 +40,13 @@ function deleteDepartment($departmentID) {
 
     if (!$result) {
         die('Lỗi khi xóa bộ phận: ' . mysqli_error($conn));
+    }else{
+        header("Location:../views/departments/departments_admin.php?mess=Xoá thành công");
     }
 
     mysqli_close($conn);
     return $result;
 }
-
 
 $department_id = $_GET['id'];
 
@@ -53,6 +55,4 @@ if (deleteDepartment($department_id)) {
 } else {
     header('Location: ../views/departments/departments_admin.php?mess=Có lỗi xảy ra khi xoá đơn vị.');
 }
-
-
 ?>

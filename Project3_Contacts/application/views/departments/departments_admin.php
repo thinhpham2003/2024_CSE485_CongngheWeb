@@ -64,13 +64,13 @@ $departments_on_page = array_slice($departments, $start, $items_per_page);
             </div>
         <?php endif; ?>
         <h2 class="text-center text-primary">Danh bạ đơn vị</h2>
-        <form class="d-flex" action="departments_search.php" method="post" style="max-width: 400px;">
+        <form class="d-flex" action="departments_search_admin.php" method="post" style="max-width: 400px;">
             <input class="form-control me-2" type="text" name="search" placeholder="Nhập thông tin tìm kiếm">
             <input type="hidden" name="action" value="search_admin">
             <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i></button>
         </form>
         <div style="margin-top: 15px"></div>
-        <button class="buttonFunction" onclick="window.location.href='departments_add.php'">Thêm</button>
+        <button class="btn btn-primary" onclick=window.location.href='departments_add.php'>Thêm mới</button>
         <div class="container-fluid mt-4">
             <div class="row">
                 <?php foreach ($departments_on_page as $department): ?>
@@ -79,16 +79,16 @@ $departments_on_page = array_slice($departments, $start, $items_per_page);
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
                                     <div>
-                                        <img src="../../../public/assets/image/department-13.png" alt="" style="width:100px">
+                                        <img src="../../../public/assets/image/department-13.png" alt="" style="width:150px" class="avatar-md rounded-circle img-thumbnail  small-image">
                                         <h5 class="font-size-14 mb-1"><?= $department['DepartmentName']?></h5>
                                         <span><?= $department['Address']?></span>
                                     </div>
                                 </div>
                                 <div class="mt-3 pt-1">
-                                    <p class="text-muted mb-0"><i class="bi bi-bookmark-fill text-primary"></i> Mã đơn vị: <?= $department['DepartmentID']?></p>
-                                    <p class="text-muted mb-0"><i class="bi bi-envelope-fill text-primary"></i> Email: <?= $department['Email']?></p>
-                                    <p class="text-muted mb-0 mt-2"><i class="bi bi-phone-fill text-primary"></i> Điện thoại: <?= $department['Phone']?></p>
-                                    <p class="text-muted mb-0 mt-2"><i class="bi bi-browser-chrome text-primary"></i> Website: <?= $department['Website']?></p>
+                                    <p class="text-muted mb-0"><i class="bi bi-person-badge-fill text-primary"> </i><?= $department['DepartmentID']?></p>
+                                    <p class="text-muted mb-0"><i class="bi bi-envelope-fill text-primary"> </i><?= $department['Email']?></p>
+                                    <p class="text-muted mb-0 mt-2"><i class="bi bi-telephone-fill text-primary"> </i><?= $department['Phone']?></p>
+                                    <p class="text-muted mb-0 mt-2"><i class="bi bi-server text-primary"> </i><?= $department['Website']?></p>
                                 </div>
                                 <div class=" gap-2 pt-4">
                                     <a href="departments_edit.php?id=<?= $department['DepartmentID']?>" class="btn btn-warning btn-sm w-50"><i class="bi bi-pencil-fill"></i> Sửa</a>

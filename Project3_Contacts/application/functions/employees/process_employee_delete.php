@@ -4,8 +4,8 @@
     if (!isset($_SESSION['user_id']) || !isset($_COOKIE['logged_in'])) {
           header("Location: ../../login.php");
     }
-    if (isset($_POST['id'])){
-        $id = $_POST['id'];
+    if (isset($_GET['id'])){
+        $id = $_GET['id'];
         if (deleteEmployee($id)){
             header("Location: ../../views/employees/employees_admin.php?mess=Xoá thành công!");
         }

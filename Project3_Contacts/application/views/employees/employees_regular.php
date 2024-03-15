@@ -67,7 +67,7 @@ $employees_on_page = array_slice($employees, $start, $items_per_page);
         <?php endif; ?>
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
         <h2 class="text-center text-primary">Danh bạ nhân viên</h2>
-        <form class="d-flex" role="search" action="employees_search.php" method="post" style="max-width: 400px;">
+        <form class="d-flex" role="search" action="employees_search_regular.php" method="post" style="max-width: 400px;">
             <input class="form-control me-2" name='find' type="text" placeholder="Nhập thông tin tìm kiếm">
             <button class="btn btn-primary" type="submit" style="padding: 5px 10px;"><i class="bi bi-search" style="font-size: 18px;"></i></button>
         </form>

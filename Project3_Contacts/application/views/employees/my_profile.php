@@ -1,6 +1,7 @@
 <?php
 include '../../models/Employee.php';
-
+include '../../functions/getDepartmentByID.php';
+include '../../functions/getDepartments.php';
 session_start();
 if(!isset($_SESSION['user_id']) || !isset($_COOKIE['logged_in'])){
     header("Location: ../../../public/home/index.php");
@@ -35,16 +36,11 @@ $employee = getEmployeeById($id);
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="../departments/<?= ($role == 'admin') ? 'departments_admin.php' : 'departments_regular.php'; ?>">Danh bạ đơn vị</a>
+                            <a class="nav-link" aria-current="page" href="../departments/<?php echo ($role == 'admin') ? 'departments_admin.php' : 'departments_regular.php'; ?>">Danh bạ đơn vị</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="<?= ($role == 'admin') ? 'employees_admin.php' : 'employees_regular.php'; ?>">Danh bạ nhân viên</a>
+                            <a class="nav-link active" aria-current="page" href="<?php echo ($role == 'admin') ? 'employees_admin.php' : 'employees_regular.php'; ?>">Danh bạ nhân viên</a>
                         </li>
-                        <?php if($role == 'admin'): ?>
-                            <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="employees_admin.php">Danh bạ người dùng</a>
-                            </li>
-                        <?php endif;?>
                     </ul>
                     <a href="my_profile.php"><button class="btn btn-primary me-3"><i class="bi bi-eye"></i> <?=$employee["FullName"]?></button> </a>
                     <a href="../../functions/logout.php" class="btn btn-danger">Đăng xuất</a>
@@ -86,6 +82,10 @@ $employee = getEmployeeById($id);
                     <label for="disabledTextInput" class="form-label">Chức vụ:</label>
                     <input type="text" id="disabledTextInput" class="form-control" value="<?=$employee['Position']?>" readonly>
                 </div>
+            <div class="mb-3">
+                <label for="disabledTextInput" class="form-label">Đơn vị:</label>
+                <input type="text" id="disabledTextInput" class="form-control" value="<?=getDepartmentByID($employee['DepartmentID'])['DepartmentName']?>" readonly>
+            </div>
         </form>
         <a href="employees_edit.php?id=<?=$employee['EmployeeID']?>"><button class="btn btn-primary ms-5"><i class="bi bi-pencil"></i>Cập nhật</button></a>
     </main>

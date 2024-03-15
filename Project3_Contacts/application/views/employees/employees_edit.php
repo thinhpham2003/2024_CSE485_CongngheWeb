@@ -1,13 +1,15 @@
 <?php
 include '../../models/Employee.php';
-
+include '../../functions/getDepartments.php';
+include '../../functions/getDepartmentByID.php';
 session_start();
 if(!isset($_SESSION['user_id']) || !isset($_COOKIE['logged_in'])){
     header("Location: ../../../public/home/index.php");
 }
+
 $id = $_GET['id'];
 $employee = getEmployeeById($id);
-$employees = getEmployees();
+$departments = getDepartments();
 ?>
     <!doctype html>
     <html lang="en">
@@ -39,9 +41,6 @@ $employees = getEmployees();
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="employees_admin.php">Danh bạ nhân viên</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="../users/users_list.php">Quản lý người dùng</a>
                             </li>
                         </ul>
                     </div>
@@ -77,11 +76,20 @@ $employees = getEmployees();
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputUsername" class="form-label">Số điện thoại:</label>
-                        <input type="text" name="mobilePhone" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<?=$employee['MobilePhone'] ?>">
+                        <input type="text" name="mobilePhone" class="form-control" pattern="[0-9]{10}" title="Vui lòng nhập số điện thoại 10 số" id="exampleInputEmail1" aria-describedby="emailHelp" value="<?=$employee['MobilePhone'] ?>">
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputUsername" class="form-label">Chức vụ:</label>
                         <input type="text" name="position" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<?=$employee['Position'] ?>">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Đơn vị:</label>
+                        <select class="form-control" name="DepartmentID">
+                            <option value="<?=$employee['DepartmentID'] ?>"><?= getDepartmentByID($employee['DepartmentID'])['DepartmentName']?></option>
+                            <?php foreach ($departments as $d): ?>
+                                <option value="<?=$d['DepartmentID']?>"><?=$d['DepartmentName']?></option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
                     <button type="submit" class="btn btn-primary">Sửa</button>
                 </form>

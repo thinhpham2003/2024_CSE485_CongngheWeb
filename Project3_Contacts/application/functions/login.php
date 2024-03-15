@@ -32,7 +32,6 @@ foreach (getUsers() as $u) {
 if ($user && $password == $user['Password']) {
     if($user['Role'] == "admin")
     {
-
         $_SESSION['user_id'] = $user['EmployeeID'];
         $_SESSION['user_role'] = $user['Role'];
         setcookie('logged_in', true, time() + 60 * 60 * 24 * 30, "/");
