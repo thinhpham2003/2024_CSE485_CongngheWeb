@@ -84,7 +84,6 @@ function updateEmployee($id, $name, $address, $email, $MobilePhone, $Position,$D
 function searchEmployees($keyword) {
     $conn = connectDB();
     $keyword = "'%$keyword%'";
-    //SELECT * FROM employees WHERE fullName LIKE "%4%" OR mobilePhone LIKE "%4%" OR departmentID IN (SELECT departmentID FROM departments WHERE departmentID LIKE "%4%")
     $sql = "SELECT * FROM employees WHERE fullName LIKE {$keyword} OR email LIKE {$keyword} OR departmentID IN  (SELECT departmentID FROM departments WHERE DepartmentName LIKE {$keyword})";
     //echo $sql;
     $result = mysqli_query($conn, $sql);

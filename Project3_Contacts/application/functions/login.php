@@ -29,22 +29,20 @@ foreach (getUsers() as $u) {
     }
 }
 
-if ($user && $password == $user['Password']) {
-    if($user['Role'] == "admin")
-    {
+if ($user && password_verify($password, $user['Password'])) {
+    if($user['Role'] == "admin") {
         $_SESSION['user_id'] = $user['EmployeeID'];
         $_SESSION['user_role'] = $user['Role'];
         setcookie('logged_in', true, time() + 60 * 60 * 24 * 30, "/");
         header('Location: ../../application/views/departments/departments_admin.php');
-    }
-    else {
+    } else {
         $_SESSION['user_id'] = $user['EmployeeID'];
         $_SESSION['user_role'] = $user['Role'];
         setcookie('logged_in', true, time() + 60 * 60 * 24 * 30, "/");
         header('Location: ../../application/views/departments/departments_regular.php');
     }
-}
-else {
+} else {
+    // Mật khẩu không khớp
     echo "Invalid username or password.";
 }
 ?>

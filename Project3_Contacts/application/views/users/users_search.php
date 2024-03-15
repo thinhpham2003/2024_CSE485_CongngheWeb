@@ -1,6 +1,8 @@
 <?php
 require_once '../../models/User.php';
 include '../../models/Employee.php';
+
+session_start();
 if(!isset($_SESSION['user_id']) || !isset($_COOKIE['logged_in']))
 {
     header("Location: ../../../public/home/index.php");
@@ -8,10 +10,20 @@ if(!isset($_SESSION['user_id']) || !isset($_COOKIE['logged_in']))
 $id = $_SESSION['user_id'];
 $employee = getEmployeeById($id);
 
+$userSearch = [];
+
 if(isset($_POST['search'])) {
     $keyword = $_POST['search'];
     $userSearch = userSearch($keyword);
 }
+
+$users_per_page = 10;
+$total_pages = ceil(count($userSearch) / $users_per_page);
+$current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+$start = ($current_page - 1) * $users_per_page;
+$end = $start + $users_per_page;
+$users_on_page = array_slice($userSearch, $start, $users_per_page);
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -45,6 +57,8 @@ if(isset($_POST['search'])) {
                     </li>
                 </ul>
             </div>
+            <a href="../employees/my_profile.php"><button class="btn btn-primary me-3"><i class="bi bi-eye"></i> <?=$employee["FullName"]?></button> </a>
+            <a href="../../functions/logout.php" class="btn btn-danger">Đăng xuất</a>
         </div>
     </nav>
 </header>
@@ -55,8 +69,8 @@ if(isset($_POST['search'])) {
                 <?= $_GET['msg']?>
             </div>
         <?php endif; ?>
-        <h3 class="text-center">Danh sách tài khoản người dùng</h3>
-        <form class="d-flex" role="search" action="employees_search.php" method="post" style="max-width: 400px;">
+        <h2 class="text-center text-primary">Danh sách người dùng</h2>
+        <form class="d-flex" role="search" action="users_search.php" method="post" style="max-width: 400px;">
             <input class="form-control me-2" name='find' type="text" placeholder="Nhập tên người dùng tìm kiếm">
             <button class="btn btn-primary" type="submit" style="padding: 5px 10px;"><i class="bi bi-search" style="font-size: 18px;"></i></button>
         </form>
@@ -67,7 +81,6 @@ if(isset($_POST['search'])) {
                 <th scope="col">STT</th>
                 <th scope="col">Tên</th>
                 <th scope="col">Vai trò</th>
-                <th scope="col" class="text-center" >Mật khẩu</th>
                 <th scope="col" class="text-center" >Mã nhân viên</th>
                 <th scope="col">Sửa</th>
                 <th scope="col">Xoá</th>
@@ -75,23 +88,29 @@ if(isset($_POST['search'])) {
             </thead>
             <tbody>
             <?php $i = 0 ?>
-            <?php foreach ($userSearch as $user): ?>
+            <?php foreach ($users_on_page as $user): ?>
                 <tr>
-                    <td><?= ++$i ?></td>
+                    <th><?= ++$i ?></th>
                     <td><?= $user['Username'] ?></td>
                     <td><?= $user['Role'] ?></td>
-                    <td class="text-center"><?= $user['Password'] ?></td>
                     <td class="text-center" ><?= $user['EmployeeID'] ?></td>
                     <td>
                         <a href="users_edit.php?username=<?= $user['Username'] ?>" class="btn btn-warning"><i class="bi bi-pencil-fill"></i></a>
                     </td>
                     <td>
-                        <a href="../../functions/deleteUser.php?username=<?= $user['Username'] ?>" class="btn btn-danger"><i class="bi bi-trash3-fill"></i></a>
+                        <a href="../../functions/deleteUser.php?username=<?= $user['Username'] ?>" onclick="return confirm('Bạn có chắc chắn muốn xoá đơn vị này không?')" class="btn btn-danger"><i class="bi bi-trash3-fill"></i></a>
                     </td>
                 </tr>
             <?php endforeach; ?>
             </tbody>
         </table>
+        <div class="container" style="margin-top: 20px">
+            <ul class="pagination justify-content-center">
+                <?php for ($page = 1; $page <= $total_pages; $page++): ?>
+                    <li class="page-item <?php if ($current_page == $page) echo 'active'; ?>"><a class="page-link" href="?page=<?= $page ?>"><?= $page ?></a></li>
+                <?php endfor; ?>
+            </ul>
+        </div>
     </div>
 </main>
 

@@ -1,24 +1,15 @@
 <?php
-require_once '../../functions/getDepartments.php';
+require_once '../../functions/searchDepartment.php';
 include '../../models/Employee.php';
-session_start();
-if (!isset($_SESSION['user_id']) || !isset($_COOKIE['logged_in'])) {
-    header('Location: ../../../public/home/index.php');
-}
-$departments = getDepartments();
-$id = $_SESSION['user_id'];
-$employee = getEmployeeById($id);
 
+$keyword = isset($_POST['search']) ? $_POST['search'] : '';
+$departmentSearch = departmentSearch($keyword);
 $items_per_page = 8;
-
-$total_pages = ceil(count($departments) / $items_per_page);
-
+$total_pages = ceil(count($departmentSearch) / $items_per_page);
 $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
-
 $start = ($current_page - 1) * $items_per_page;
 $end = $start + $items_per_page;
-
-$departments_on_page = array_slice($departments, $start, $items_per_page);
+$departments_on_page = array_slice($departmentSearch, $start, $items_per_page);
 ?>
 <!doctype html>
 <html lang="en">
@@ -27,28 +18,29 @@ $departments_on_page = array_slice($departments, $start, $items_per_page);
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Danh bạ đơn vị cho quản trị</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../../../public/assets/style/buttonFunctionStyle.css">
+    <title>Tìm kiếm đơn vị</title>
 </head>
 <body>
-<div class="container_fluid">
+<div class="container-fluid">
     <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
                 <a class="navbar-brand text-primary" href="#">Danh bạ</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="../departments/departments_admin.php">Danh bạ đơn vị</a>
+                            <a class="nav-link active" href="departments_guest.php">Danh bạ đơn vị</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="../employees/employees_regular.php">Danh bạ nhân viên</a>
+                            <a class="nav-link" href="../employees/employees_guest.php">Danh bạ nhân viên</a>
                         </li>
                     </ul>
-                    <a href="../employees/my_profile.php"><button class="btn btn-primary me-3"><i class="bi bi-eye"></i> <?=$employee["FullName"]?></button> </a>
-                    <a href="../../functions/logout.php" class="btn btn-danger">Đăng xuất</a>
+                    <a href="../../../public/home/index.php" class="btn btn-primary">Đăng nhập</a>
                 </div>
             </div>
         </nav>
@@ -61,7 +53,7 @@ $departments_on_page = array_slice($departments, $start, $items_per_page);
             </div>
         <?php endif; ?>
         <h2 class="text-center text-primary">Danh bạ đơn vị</h2>
-        <form class="d-flex" action="departments_search_regular.php" method="post" style="max-width: 400px;">
+        <form class="d-flex" action="departments_search_guest.php" method="post" style="max-width: 400px;">
             <input class="form-control me-2" type="text" name="search" placeholder="Nhập thông tin tìm kiếm">
             <input type="hidden" name="action" value="search_admin">
             <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i></button>
@@ -82,15 +74,13 @@ $departments_on_page = array_slice($departments, $start, $items_per_page);
                                         ?>
                                         <img src="<?= $logoPath ?>" alt="" style="width:150px" class="avatar-md rounded-circle img-thumbnail  small-image">
                                         <h5 class="font-size-14 mb-1"><?= $department['DepartmentName']?></h5>
-                                        <span><?= $department['Address']?></span>
+                                        <p><?= $department['Address']?></p>
                                     </div>
                                 </div>
-                                <div class="mt-3 pt-1">
-                                    <p class="text-muted mb-0"><i class="bi bi-person-badge-fill text-primary"> </i><?= $department['DepartmentID']?></p>
-                                    <p class="text-muted mb-0"><i class="bi bi-envelope-fill text-primary"> </i><?= $department['Email']?></p>
-                                    <p class="text-muted mb-0 mt-2"><i class="bi bi-telephone-fill text-primary"> </i><?= $department['Phone']?></p>
-                                    <p class="text-muted mb-0 mt-2"><i class="bi bi-server text-primary"> </i><?= $department['Website']?></p>
-                                </div>
+                                <p class="text-muted mb-0"><i class="bi bi-person-badge-fill text-primary"> </i><?= $department['DepartmentID']?></p>
+                                <p class="text-muted mb-0"><i class="bi bi-envelope-fill text-primary"> </i><?= $department['Email']?></p>
+                                <p class="text-muted mb-0 mt-2"><i class="bi bi-telephone-fill text-primary"> </i><?= $department['Phone']?></p>
+                                <p class="text-muted mb-0 mt-2"><i class="bi bi-server text-primary"> </i><?= $department['Website']?></p>
                             </div>
                         </div>
                     </div>
@@ -105,6 +95,11 @@ $departments_on_page = array_slice($departments, $start, $items_per_page);
             </ul>
         </div>
     </main>
+    <footer>
+
+    </footer>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
+

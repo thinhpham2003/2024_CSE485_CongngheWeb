@@ -6,6 +6,7 @@ if(!isset($_SESSION['user_id']) || !isset($_COOKIE['logged_in']))
     header("Location: ../../../public/home/index.php");
 }
 $id = $_SESSION['user_id'];
+$employees = getEmployees();
 $employee = getEmployeeById($id);
 ?>
 <!doctype html>
@@ -65,20 +66,28 @@ $employee = getEmployeeById($id);
                 <input type="text" value="" class="form-control" id="username" name="username">
             </div>
             <div class="mb-3">
-                <label for="username" class="form-label">Mật khẩu: </label>
+                <label for="password" class="form-label">Mật khẩu: </label>
                 <input type="text" value="" class="form-control" id="password" name="password">
             </div>
             <div class="mb-3">
                 <label for="role" class="form-label">Vai trò:</label>
-                <select class="form-select" id="role" name="Role">
+                <select class="form-select" id="role" name="role">
                     <option value=""></option>
                     <option value="admin">Quản trị viên</option>
                     <option value="regular">Người dùng thông thường</option>
                 </select>
             </div>
+            <div class="mb-3">
+                <label for="employeeid" class="form-label">Tên nhân viên:</label>
+                <select class="form-select" id="EmployeeID" name="EmployeeID">
+                    <option value=""></option>
+                    <?php foreach ($employees as $e): ?>
+                        <option value="<?=$e['EmployeeID']?>"><?=$e['FullName']?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
             <button type="submit" class="btn btn-primary">Thêm</button>
         </form>
-
     </div>
 </main>
 

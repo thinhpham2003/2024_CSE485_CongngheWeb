@@ -24,7 +24,6 @@ $departments_on_page = array_slice($departments, $start, $items_per_page);
     <title>Danh bạ đơn vị cho quản trị</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../../../public/assets/style/buttonFunctionStyle.css">
 </head>
 <body>
 <div class="container_fluid">
@@ -47,14 +46,8 @@ $departments_on_page = array_slice($departments, $start, $items_per_page);
         </nav>
     </header>
     <main>
-        <?php
-        if (isset($_GET['mess'])):?>
-            <div class="alert alert-success" role="alert">
-                <?=$_GET['mess'];?>
-            </div>
-        <?php endif; ?>
         <h2 class="text-center text-primary">Danh bạ đơn vị</h2>
-        <form class="d-flex" action="departments_search_admin.php" method="post" style="max-width: 400px;">
+        <form class="d-flex" action="departments_search_guest.php" method="post" style="max-width: 400px;">
             <input class="form-control me-2" type="text" name="search" placeholder="Nhập thông tin tìm kiếm">
             <input type="hidden" name="action" value="search_admin">
             <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i></button>
@@ -68,16 +61,21 @@ $departments_on_page = array_slice($departments, $start, $items_per_page);
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
                                     <div>
-                                        <img src="../../../public/assets/image/department-13.png" alt="" style="width:100px">
+                                        <?php
+                                        $departmentLogoPath = "../../../public/assets/image/departments_logo/department_logo_{$department['DepartmentName']}.jpg";
+                                        $defaultLogoPath = "../../../public/assets/image/departments_logo/department_logo_default.jpg";
+                                        $logoPath = file_exists($departmentLogoPath) ? $departmentLogoPath : $defaultLogoPath;
+                                        ?>
+                                        <img src="<?= $logoPath ?>" alt="" style="width:150px" class="avatar-md rounded-circle img-thumbnail  small-image">
                                         <h5 class="font-size-14 mb-1"><?= $department['DepartmentName']?></h5>
                                         <span><?= $department['Address']?></span>
                                     </div>
                                 </div>
                                 <div class="mt-3 pt-1">
-                                    <p class="text-muted mb-0"><i class="bi bi-bookmark-fill text-primary"></i> Mã đơn vị: <?= $department['DepartmentID']?></p>
-                                    <p class="text-muted mb-0"><i class="bi bi-envelope-fill text-primary"></i> Email: <?= $department['Email']?></p>
-                                    <p class="text-muted mb-0 mt-2"><i class="bi bi-phone-fill text-primary"></i> Điện thoại: <?= $department['Phone']?></p>
-                                    <p class="text-muted mb-0 mt-2"><i class="bi bi-browser-chrome text-primary"></i> Website: <?= $department['Website']?></p>
+                                    <p class="text-muted mb-0"><i class="bi bi-person-badge-fill text-primary"> </i><?= $department['DepartmentID']?></p>
+                                    <p class="text-muted mb-0"><i class="bi bi-envelope-fill text-primary"> </i><?= $department['Email']?></p>
+                                    <p class="text-muted mb-0 mt-2"><i class="bi bi-telephone-fill text-primary"> </i><?= $department['Phone']?></p>
+                                    <p class="text-muted mb-0 mt-2"><i class="bi bi-server text-primary"> </i><?= $department['Website']?></p>
                                 </div>
                             </div>
                         </div>

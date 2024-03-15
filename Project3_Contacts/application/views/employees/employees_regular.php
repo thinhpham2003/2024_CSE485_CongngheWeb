@@ -29,7 +29,7 @@ $employees_on_page = array_slice($employees, $start, $items_per_page);
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Danh bạ nhân viên</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.0/css/boxicons.min.css" integrity="sha512-pVCM5+SN2+qwj36KonHToF2p1oIvoU3bsqxphdOIWMYmgr4ZqD3t5DjKvvetKhXGc/ZG5REYTT6ltKfExEei/Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css" integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -85,7 +85,12 @@ $employees_on_page = array_slice($employees, $start, $items_per_page);
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="d-flex align-items-center">
-                                            <div><img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="avatar-md rounded-circle img-thumbnail  small-image" /></div>
+                                            <?php
+                                            $employeeAvatarPath = "../../../public/assets/image/employees_avatar/employee_avatar_{$e['FullName']}.jpg";
+                                            $defaultAvatarPath = "../../../public/assets/image/employees_avatar/employee_avatar_default.jpg";
+                                            $avatarPath = file_exists($employeeAvatarPath) ? $employeeAvatarPath : $defaultAvatarPath;
+                                            ?>
+                                            <img src="<?= $avatarPath ?>" alt="" style="width:150px" class="avatar-md rounded-circle img-thumbnail  small-image">
                                             <div class="flex-1 ms-3">
                                                 <h5 class="font-size-14 mb-1"><a href="#" class="text-dark"><?= $e['FullName']?></a></h5>
                                                 <span><?= $e['Position']?></span>

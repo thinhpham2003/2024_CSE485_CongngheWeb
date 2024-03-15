@@ -25,14 +25,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $result = mysqli_stmt_get_result($stmt);
     $user = mysqli_fetch_assoc($result);
 
-    if ($oldPassword != $user['Password']) {
-        header("Location:user_edit.php?err=Mat khau cu khong dung");
+    if (!password_verify($oldPassword, $user['Password'])) {
+        header("Location:user_edit.php?err=Mật khẩu cũ không đúng");
         exit;
     }
 
+    $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+
     $sql = "UPDATE users SET Password = ?, Role = ? WHERE Username = ?";
     $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "sss", $newPassword,$role, $Username);
+    mysqli_stmt_bind_param($stmt, "sss", $hashedPassword,$role, $Username);
     $result = mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
 
@@ -44,4 +46,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     exit;
 }
 ?>
->

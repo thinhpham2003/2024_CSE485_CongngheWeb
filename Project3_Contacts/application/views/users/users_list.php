@@ -11,11 +11,13 @@ $id = $_SESSION['user_id'];
 $employee = getEmployeeById($id);
 
 $users = getAllUsers();
-$currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
-$itemsPerPage = 10;
-$totalPages = ceil(count($users) / $itemsPerPage);
-$currentPageItems = array_slice($users, ($currentPage - 1) * $itemsPerPage, $itemsPerPage);
 
+$users_per_page = 10;
+$total_pages = ceil(count($users) / $users_per_page);
+$current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+$start = ($current_page - 1) * $users_per_page;
+$end = $start + $users_per_page;
+$users_on_page = array_slice($users, $start, $users_per_page);
 ?>
 <!doctype html>
 <html lang="en">
@@ -80,7 +82,7 @@ $currentPageItems = array_slice($users, ($currentPage - 1) * $itemsPerPage, $ite
             </thead>
             <tbody>
             <?php $i = 0 ?>
-            <?php foreach ($currentPageItems as $user): ?>
+            <?php foreach ($users_on_page as $user): ?>
                 <tr>
                     <th><?= ++$i ?></th>
                     <td><?= $user['Username'] ?></td>
@@ -96,22 +98,13 @@ $currentPageItems = array_slice($users, ($currentPage - 1) * $itemsPerPage, $ite
             <?php endforeach; ?>
             </tbody>
         </table>
-        <ul class="pagination">
-            <?php if ($currentPage > 1): ?>
-                <li class="page-item"><a class="page-link" href="?page=<?php echo $currentPage - 1; ?>">Previous</a></li>
-            <?php endif; ?>
-            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                <?php if ($i == $currentPage): ?>
-                    <li class="page-item"><a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
-                <?php else: ?>
-                    <li class="page-item"><a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
-                <?php endif; ?>
-            <?php endfor; ?>
-            <?php if ($currentPage < $totalPages): ?>
-                <li class="page-item"><a class="page-link" href="?page=<?php echo $currentPage + 1; ?>">Next</a></li>
-            <?php endif; ?>
-        </ul>
-
+        <div class="container" style="margin-top: 20px">
+            <ul class="pagination justify-content-center">
+                <?php for ($page = 1; $page <= $total_pages; $page++): ?>
+                    <li class="page-item <?php if ($current_page == $page) echo 'active'; ?>"><a class="page-link" href="?page=<?= $page ?>"><?= $page ?></a></li>
+                <?php endfor; ?>
+            </ul>
+        </div>
     </div>
 </main>
 

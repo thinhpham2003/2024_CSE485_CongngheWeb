@@ -50,17 +50,17 @@ $departments = getDepartments();
         </nav>
     </header>
     <main>
-        <h2 class="text-center">Thêm nhân viên</h2>
+        <h2 class="text-center text-primary">Thêm nhân viên</h2>
         <?php
         if (isset($_GET['err'])):?>
             <div class="alert alert-danger" role="alert">
                 <?=$_GET['err'];?>
             </div>
         <?php endif; ?>
-        <form action="../../functions/employees/process_employee_add.php" method="post">
+        <form action="../../functions/employees/process_employee_add.php" method="post" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Tên nhân viên:</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" name="name">
+                <input type="text" class="form-control" id="exampleInputEmail1" name="Name">
             </div>
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Địa chỉ:</label>
@@ -88,7 +88,7 @@ $departments = getDepartments();
             </div>
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Ảnh đại diện:</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" name="Avatar">
+                <input type="file" name="Avatar" class="form-control" id="Avatar" required>
             </div>
             <button type="submit" class="btn btn-primary">Thêm</button>
         </form>

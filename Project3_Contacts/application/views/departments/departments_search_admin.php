@@ -5,12 +5,17 @@ session_start();
 if (!isset($_SESSION['user_id']) || !isset($_COOKIE['logged_in'])) {
     header('Location: ../../../public/home/index.php');
 }
-if(isset($_POST['search'])) {
-    $keyword = $_POST['search'];
-    $departmentSearch = departmentSearch($keyword);
-}
+
+$keyword = isset($_POST['search']) ? $_POST['search'] : '';
+$departmentSearch = departmentSearch($keyword);
 $id = $_SESSION['user_id'];
 $employee = getEmployeeById($id);
+$items_per_page = 8;
+$total_pages = ceil(count($departmentSearch) / $items_per_page);
+$current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+$start = ($current_page - 1) * $items_per_page;
+$end = $start + $items_per_page;
+$departments_on_page = array_slice($departmentSearch, $start, $items_per_page);
 ?>
 <!doctype html>
 <html lang="en">
@@ -19,10 +24,8 @@ $employee = getEmployeeById($id);
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../../../public/assets/style/buttonFunctionStyle.css">
-    <link rel="stylesheet" href="../../../public/assets/style/paginationStyle.css">
     <title>Tìm kiếm đơn vị</title>
 </head>
 <body>
@@ -37,17 +40,14 @@ $employee = getEmployeeById($id);
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" href="<?= isset($_POST['action']) && $_POST['action'] == "search_admin" ? "departments_admin.php" : "departments_regular.php"; ?>">Quản lý đơn vị</a>
+                            <a class="nav-link active" href="departments_admin.php">Quản lý đơn vị</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?= isset($_POST['action']) && $_POST['action'] == "search_admin" ? "../../views/employees/employees_admin.php" : "../../employees/employees_regular.php"; ?>">Quản lý nhân viên</a>
+                            <a class="nav-link" href="../../views/employees/employees_admin.php">Quản lý nhân viên</a>
                         </li>
-                        <?php
-                        if(isset($_POST['action']) && $_POST['action'] == "search_admin"):?>
-                            <li class="nav-item">
-                                <a class="nav-link" href="../users/users_list.php">Quản lý người dùng</a>
-                            </li>
-                        <?php endif; ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../users/users_list.php">Quản lý người dùng</a>
+                        </li>
                     </ul>
                     <a href="../employees/my_profile.php"><button class="btn btn-primary me-3"><i class="bi bi-eye"></i> <?=$employee["FullName"]?></button> </a>
                     <a href="../../functions/logout.php" class="btn btn-danger">Đăng xuất</a>
@@ -69,32 +69,42 @@ $employee = getEmployeeById($id);
                     <button class="btn btn-primary" onclick=window.location.href='departments_add.php'>Thêm mới</button>
                     <div class="container-fluid mt-4">
                         <div class="row">
-                            <?php foreach ($departmentSearch as $department): ?>
+                            <?php foreach ($departments_on_page as $department): ?>
                                 <div class="col-xl-3 col-sm-6">
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="d-flex align-items-center">
                                                 <div>
-                                                    <img src="../../../public/assets/image/department-13.png" alt="" style="width:150px" class="avatar-md rounded-circle img-thumbnail  small-image">
+                                                    <?php
+                                                    $departmentLogoPath = "../../../public/assets/image/departments_logo/department_logo_{$department['DepartmentName']}.jpg";
+                                                    $defaultLogoPath = "../../../public/assets/image/departments_logo/department_logo_default.jpg";
+                                                    $logoPath = file_exists($departmentLogoPath) ? $departmentLogoPath : $defaultLogoPath;
+                                                    ?>
+                                                    <img src="<?= $logoPath ?>" alt="" style="width:150px" class="avatar-md rounded-circle img-thumbnail  small-image">
                                                     <h5 class="font-size-14 mb-1"><?= $department['DepartmentName']?></h5>
-                                                    <span><?= $department['Address']?></span>
+                                                    <p><?= $department['Address']?></p>
                                                 </div>
                                             </div>
-                                            <div class="mt-3 pt-1">
-                                                <p class="text-muted mb-0"><i class="bi bi-person-badge-fill text-primary"> </i><?= $department['DepartmentID']?></p>
-                                                <p class="text-muted mb-0"><i class="bi bi-envelope-fill text-primary"> </i><?= $department['Email']?></p>
-                                                <p class="text-muted mb-0 mt-2"><i class="bi bi-telephone-fill text-primary"> </i><?= $department['Phone']?></p>
-                                                <p class="text-muted mb-0 mt-2"><i class="bi bi-server text-primary"> </i><?= $department['Website']?></p>
-                                            </div>
-                                            <div class=" gap-2 pt-4">
-                                                <a href="departments_edit.php?id=<?= $department['DepartmentID']?>" class="btn btn-warning btn-sm w-50"><i class="bi bi-pencil-fill"></i> Sửa</a>
-                                                <a href="../../functions/deleteDepartment.php?id=<?= $department['DepartmentID']?>" class="btn btn-danger btn-sm w-50" onclick="return confirm('Bạn có chắc chắn muốn xoá đơn vị này không?')"><i class="bi bi-trash3-fill"></i> Xoá</a>
+                                            <p class="text-muted mb-0"><i class="bi bi-person-badge-fill text-primary"> </i><?= $department['DepartmentID']?></p>
+                                            <p class="text-muted mb-0"><i class="bi bi-envelope-fill text-primary"> </i><?= $department['Email']?></p>
+                                            <p class="text-muted mb-0 mt-2"><i class="bi bi-telephone-fill text-primary"> </i><?= $department['Phone']?></p>
+                                            <p class="text-muted mb-0 mt-2"><i class="bi bi-server text-primary"> </i><?= $department['Website']?></p>
+                                            <div class=" gap-2 pt-4 d-flex">
+                                                <a href="departments_edit.php?id=<?= $department["DepartmentID"]?>"><button type="button" class="btn btn-warning"><i class="bi bi-pencil-fill"></i></button></a>
+                                                <a href="../../functions/employees/process_employee_delete.php?id=<?= $department["DepartmentID"]?>" onclick="return confirm('Bạn có chắc chắn muốn xoá nhân viên này không?')"><button type="button" class="btn btn-danger"><i class="bi bi-trash3-fill"></i></button></a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             <?php endforeach; ?>
                         </div>
+                    </div>
+                    <div class="container" style="margin-top: 20px">
+                        <ul class="pagination justify-content-center">
+                            <?php for ($page = 1; $page <= $total_pages; $page++): ?>
+                                <li class="page-item <?php if ($current_page == $page) echo 'active'; ?>"><a class="page-link" href="?page=<?= $page ?>"><?= $page ?></a></li>
+                            <?php endfor; ?>
+                        </ul>
                     </div>
                 </div>
             </div>

@@ -1,22 +1,22 @@
 <?php
 include '../../models/Employee.php';
-
-session_start();
-if(!isset($_SESSION['user_id']) || !isset($_COOKIE['logged_in'])){
-    header("Location: ../../../public/home/index.php");
-}
-$id = $_SESSION['user_id'];
-$employee = getEmployeeById($id);
 if (!$_SERVER['REQUEST_METHOD'] == "POST"){
     header("index.php?mess=Không có thông tin tìm kiếm");
 }
-if(isset($_POST['find']) && !empty($_POST['find'])) {
+if(!empty($_POST['find'])) {
     $keyword = $_POST['find'];
     $employees = searchEmployees($keyword);
 } else {
     header("Location: index.php?mess=Không có thông tin tìm kiếm");
     exit();
 }
+$items_per_page = 8;
+$total_pages = ceil(count($employees) / $items_per_page);
+$current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+$start = ($current_page - 1) * $items_per_page;
+$end = $start + $items_per_page;
+$employees_on_page = array_slice($employees, $start, $items_per_page);
+
 ?>
     <!doctype html>
     <html lang="en">
@@ -44,37 +44,23 @@ if(isset($_POST['find']) && !empty($_POST['find'])) {
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="../departments/departments_regular.php">Danh bạ đơn vị</a>
+                                <a class="nav-link" aria-current="page" href="../departments/departments_guest.php">Danh bạ đơn vị</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="employees_regular.php">Danh bạ nhân viên</a>
+                                <a class="nav-link active" aria-current="page" href="employees_guest.php">Danh bạ nhân viên</a>
                             </li>
-                            <?php
-                            if(isset($_POST['action']) && $_POST['action'] == "search_admin"):?>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="../users/users_list.php">Quản lý người dùng</a>
-                                </li>
-                            <?php endif; ?>
                         </ul>
-                        <a href="my_profile.php"><button class="btn btn-primary me-3"><i class="bi bi-eye"></i> <?=$employee["FullName"]?></button> </a>
-                        <a href="../../functions/logout.php" class="btn btn-danger">Đăng xuất</a>
+                        <a href="../../../public/home/index.php" class="btn btn-primary">Đăng nhập</a>
                     </div>
                 </div>
             </nav>
         </header>
         <main>
             <h2 class="text-center text-primary">Danh bạ nhân viên</h2>
-            <form class="d-flex" role="search" action="employees_search_regular.php" method="post" style="max-width: 400px;">
+            <form class="d-flex" role="search" action="employees_search_guest.php" method="post" style="max-width: 400px;">
                 <input class="form-control me-2" name='find' type="text" placeholder="Nhập thông tin tìm kiếm">
                 <button class="btn btn-primary" type="submit" style="padding: 5px 10px;"><i class="bi bi-search" style="font-size: 18px;"></i></button>
             </form>
-            <?php
-            if (isset($_GET['mess'])):?>
-                <div class="alert alert-success" role="alert">
-                    <?=$_GET['mess'];?>
-                </div>
-            <?php endif; ?>
-            <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
             <div class="container-fluid mt-4 " >
                 <div class="row">
                     <?php foreach ($employees as $e):
@@ -83,7 +69,12 @@ if(isset($_POST['find']) && !empty($_POST['find'])) {
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex align-items-center">
-                                        <div><img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="avatar-md rounded-circle img-thumbnail  small-image" /></div>
+                                        <?php
+                                        $employeeAvatarPath = "../../../public/assets/image/employees_avatar/employee_avatar_{$e['FullName']}.jpg";
+                                        $defaultAvatarPath = "../../../public/assets/image/employees_avatar/employee_avatar_default.jpg";
+                                        $avatarPath = file_exists($employeeAvatarPath) ? $employeeAvatarPath : $defaultAvatarPath;
+                                        ?>
+                                        <img src="<?= $avatarPath ?>" alt="" style="width:150px" class="avatar-md rounded-circle img-thumbnail  small-image">
                                         <div class="flex-1 ms-3">
                                             <h5 class="font-size-14 mb-1"><a href="#" class="text-dark"><?= $e['FullName']?></a></h5>
                                             <span><?= $e['Position']?></span>

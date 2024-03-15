@@ -17,7 +17,6 @@ if(isset($_POST['find']) && !empty($_POST['find'])) {
     header("Location: index.php?mess=Không có thông tin tìm kiếm");
     exit();
 }
-$user_employee = getEmployeeById(1);
 ?>
     <!doctype html>
     <html lang="en">
@@ -57,7 +56,7 @@ $user_employee = getEmployeeById(1);
                                 </li>
                             <?php endif; ?>
                         </ul>
-                        <a href="my_profile.php"><button class="btn btn-primary me-3"><i class="bi bi-eye"></i> <?=$user_employee["FullName"]?></button> </a>
+                        <a href="my_profile.php"><button class="btn btn-primary me-3"><i class="bi bi-eye"></i> <?=$employee["FullName"]?></button> </a>
                         <a href="../../functions/logout.php" class="btn btn-danger">Đăng xuất</a>
                     </div>
                 </div>

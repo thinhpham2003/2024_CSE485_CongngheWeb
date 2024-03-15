@@ -91,7 +91,12 @@ $employees_on_page = array_slice($employees, $start, $items_per_page);
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex align-items-center">
-                                        <div><img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="avatar-md rounded-circle img-thumbnail  small-image" /></div>
+                                        <?php
+                                        $employeeAvatarPath = "../../../public/assets/image/employees_avatar/employee_avatar_{$e['FullName']}.jpg";
+                                        $defaultAvatarPath = "../../../public/assets/image/employees_avatar/employee_avatar_default.jpg";
+                                        $avatarPath = file_exists($employeeAvatarPath) ? $employeeAvatarPath : $defaultAvatarPath;
+                                        ?>
+                                        <img src="<?= $avatarPath ?>" alt="" style="width:150px" class="avatar-md rounded-circle img-thumbnail  small-image">
                                         <div class="flex-1 ms-3">
                                             <h5 class="font-size-14 mb-1"><a href="#" class="text-dark"><?= $e['FullName']?></a></h5>
                                             <span><?= $e['Position']?></span>
@@ -112,7 +117,7 @@ $employees_on_page = array_slice($employees, $start, $items_per_page);
                         </div>
                     <?php endforeach; ?>
                 </div>
-                </div>
+            </div>
                 <div class="container" style="margin-top: 20px">
                     <ul class="pagination justify-content-center">
                         <?php for ($page = 1; $page <= $total_pages; $page++): ?>
@@ -120,7 +125,7 @@ $employees_on_page = array_slice($employees, $start, $items_per_page);
                         <?php endfor; ?>
                     </ul>
                 </div>
-            </div>
+        </div>
     </main>
 </div>
 </body>

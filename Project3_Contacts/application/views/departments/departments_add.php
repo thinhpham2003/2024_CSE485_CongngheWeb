@@ -58,7 +58,7 @@ $employee = getEmployeeById($id);
                 <div class="col-md">
                     <h2 class="text-center text-primary">Thêm đơn vị</h2>
                     <table class="table">
-                        <form action="../../functions/addDepartment.php" method="post">
+                        <form action="../../functions/addDepartment.php" method="post" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="username">Tên đơn vị</label>
                                 <input type="text" name="departmentName" class="form-control" required>
@@ -76,12 +76,12 @@ $employee = getEmployeeById($id);
                                 <input type="text" name="phone" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label for="email">Logo</label>
-                                <input type="text" name="logo" class="form-control" required>
-                            </div>
-                            <div class="form-group">
                                 <label for="email">Website</label>
                                 <input type="text" name="website" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Logo</label>
+                                <input type="file" name="logo" class="form-control" id="logo" required>
                             </div>
                             <button type="submit" class="form-control" style="margin-top: 30px">Thêm</button>
                         </form>

@@ -18,7 +18,7 @@ function getAllUsers()
 function userSearch($keyword)
 {
     $conn = connectDB();
-    $escaped_keyword = mysqli_real_escape_string($conn, $keyword); // Escape the keyword
+    $escaped_keyword = mysqli_real_escape_string($conn, $keyword);
     $sql = "SELECT * FROM users WHERE Username LIKE '%$escaped_keyword%' OR Password LIKE '%$escaped_keyword%' OR Role LIKE '%$escaped_keyword%' OR EmployeeID LIKE '%$escaped_keyword%'";
     $result = mysqli_query($conn, $sql);
     $department = [];

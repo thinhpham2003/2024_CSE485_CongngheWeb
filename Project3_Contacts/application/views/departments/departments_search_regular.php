@@ -11,6 +11,17 @@ if(isset($_POST['search'])) {
 }
 $id = $_SESSION['user_id'];
 $employee = getEmployeeById($id);
+
+$items_per_page = 8;
+
+$total_pages = ceil(count($departmentSearch) / $items_per_page);
+
+$current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+
+$start = ($current_page - 1) * $items_per_page;
+$end = $start + $items_per_page;
+
+$departments_on_page = array_slice($departmentSearch, $start, $items_per_page);
 ?>
 <!doctype html>
 <html lang="en">
@@ -21,8 +32,6 @@ $employee = getEmployeeById($id);
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../../../public/assets/style/buttonFunctionStyle.css">
-    <link rel="stylesheet" href="../../../public/assets/style/paginationStyle.css">
     <title>Tìm kiếm đơn vị</title>
 </head>
 <body>
@@ -50,45 +59,55 @@ $employee = getEmployeeById($id);
         </nav>
     </header>
     <main>
-        <div class="container-fluid mt-2">
-            <div class="row">
-                <div class="col-md">
-                    <h2 class="text-center text-primary">Danh bạ đơn vị</h2>
-                    <form class="d-flex" action="departments_search_regular.php" method="post" style="max-width: 400px;">
-                        <input class="form-control me-2" type="text" name="search" placeholder="Nhập thông tin tìm kiếm">
-                        <input type="hidden" name="action" value="search_admin">
-                        <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i></button>
-                    </form>
-                    <div style="margin-top: 15px"></div>
-                    <button class="btn btn-primary" onclick=window.location.href='departments_add.php'>Thêm mới</button>
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th scope="col">Mã đơn vị</th>
-                            <th scope="col">Tên đơn vị</th>
-                            <th scope="col">Địa chỉ</th>
-                            <th scope="col">Thư điện tử</th>
-                            <th scope="col">Số điện thoại</th>
-                            <th scope="col">Logo</th>
-                            <th scope="col">Website</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <?php foreach($departmentSearch as $department): ?>
-                            <tr>
-                                <td style="text-align: center"><?= $department['DepartmentID']?></td>
-                                <td><?= $department['DepartmentName']?></td>
-                                <td><?= $department['Address']?></td>
-                                <td><?= $department['Email']?></td>
-                                <td ><?= $department['Phone']?></td>
-                                <td><?= $department['Logo']?></td>
-                                <td><?= $department['Website']?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
+        <?php
+        if (isset($_GET['mess'])):?>
+            <div class="alert alert-success" role="alert">
+                <?=$_GET['mess'];?>
             </div>
+        <?php endif; ?>
+        <h2 class="text-center text-primary">Danh bạ đơn vị</h2>
+        <form class="d-flex" action="departments_search_regular.php" method="post" style="max-width: 400px;">
+            <input class="form-control me-2" type="text" name="search" placeholder="Nhập thông tin tìm kiếm">
+            <input type="hidden" name="action" value="search_admin">
+            <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i></button>
+        </form>
+        <div style="margin-top: 15px"></div>
+        <div class="container-fluid mt-4">
+            <div class="row">
+                <?php foreach ($departments_on_page as $department): ?>
+                    <div class="col-xl-3 col-sm-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <?php
+                                        $departmentLogoPath = "../../../public/assets/image/departments_logo/department_logo_{$department['DepartmentName']}.jpg";
+                                        $defaultLogoPath = "../../../public/assets/image/departments_logo/department_logo_default.jpg";
+                                        $logoPath = file_exists($departmentLogoPath) ? $departmentLogoPath : $defaultLogoPath;
+                                        ?>
+                                        <img src="<?= $logoPath ?>" alt="" style="width:150px" class="avatar-md rounded-circle img-thumbnail  small-image">
+                                        <h5 class="font-size-14 mb-1"><?= $department['DepartmentName']?></h5>
+                                        <span><?= $department['Address']?></span>
+                                    </div>
+                                </div>
+                                <div class="mt-3 pt-1">
+                                    <p class="text-muted mb-0"><i class="bi bi-person-badge-fill text-primary"> </i><?= $department['DepartmentID']?></p>
+                                    <p class="text-muted mb-0"><i class="bi bi-envelope-fill text-primary"> </i><?= $department['Email']?></p>
+                                    <p class="text-muted mb-0 mt-2"><i class="bi bi-telephone-fill text-primary"> </i><?= $department['Phone']?></p>
+                                    <p class="text-muted mb-0 mt-2"><i class="bi bi-server text-primary"> </i><?= $department['Website']?></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <div class="container" style="margin-top: 20px">
+            <ul class="pagination justify-content-center">
+                <?php for ($page = 1; $page <= $total_pages; $page++): ?>
+                    <li class="page-item <?php if ($current_page == $page) echo 'active'; ?>"><a class="page-link" href="?page=<?= $page ?>"><?= $page ?></a></li>
+                <?php endfor; ?>
+            </ul>
         </div>
     </main>
     <footer>

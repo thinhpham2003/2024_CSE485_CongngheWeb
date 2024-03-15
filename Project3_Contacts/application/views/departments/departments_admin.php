@@ -30,7 +30,6 @@ $departments_on_page = array_slice($departments, $start, $items_per_page);
     <title>Danh bạ đơn vị cho quản trị</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../../../public/assets/style/buttonFunctionStyle.css">
 </head>
 <body>
 <div class="container_fluid">
@@ -79,20 +78,23 @@ $departments_on_page = array_slice($departments, $start, $items_per_page);
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
                                     <div>
-                                        <img src="../../../public/assets/image/department-13.png" alt="" style="width:150px" class="avatar-md rounded-circle img-thumbnail  small-image">
+                                        <?php
+                                        $departmentLogoPath = "../../../public/assets/image/departments_logo/department_logo_{$department['DepartmentName']}.jpg";
+                                        $defaultLogoPath = "../../../public/assets/image/departments_logo/department_logo_default.jpg";
+                                        $logoPath = file_exists($departmentLogoPath) ? $departmentLogoPath : $defaultLogoPath;
+                                        ?>
+                                        <img src="<?= $logoPath ?>" alt="" style="width:150px" class="avatar-md rounded-circle img-thumbnail  small-image">
                                         <h5 class="font-size-14 mb-1"><?= $department['DepartmentName']?></h5>
-                                        <span><?= $department['Address']?></span>
+                                        <p><?= $department['Address']?></p>
                                     </div>
                                 </div>
-                                <div class="mt-3 pt-1">
-                                    <p class="text-muted mb-0"><i class="bi bi-person-badge-fill text-primary"> </i><?= $department['DepartmentID']?></p>
-                                    <p class="text-muted mb-0"><i class="bi bi-envelope-fill text-primary"> </i><?= $department['Email']?></p>
-                                    <p class="text-muted mb-0 mt-2"><i class="bi bi-telephone-fill text-primary"> </i><?= $department['Phone']?></p>
-                                    <p class="text-muted mb-0 mt-2"><i class="bi bi-server text-primary"> </i><?= $department['Website']?></p>
-                                </div>
-                                <div class=" gap-2 pt-4">
-                                    <a href="departments_edit.php?id=<?= $department['DepartmentID']?>" class="btn btn-warning btn-sm w-50"><i class="bi bi-pencil-fill"></i> Sửa</a>
-                                    <a href="../../functions/deleteDepartment.php?id=<?= $department['DepartmentID']?>" class="btn btn-danger btn-sm w-50" onclick="return confirm('Bạn có chắc chắn muốn xoá đơn vị này không?')"><i class="bi bi-trash3-fill"></i> Xoá</a>
+                                <p class="text-muted mb-0"><i class="bi bi-person-badge-fill text-primary"> </i><?= $department['DepartmentID']?></p>
+                                <p class="text-muted mb-0"><i class="bi bi-envelope-fill text-primary"> </i><?= $department['Email']?></p>
+                                <p class="text-muted mb-0 mt-2"><i class="bi bi-telephone-fill text-primary"> </i><?= $department['Phone']?></p>
+                                <p class="text-muted mb-0 mt-2"><i class="bi bi-server text-primary"> </i><?= $department['Website']?></p>
+                                <div class=" gap-2 pt-4 d-flex">
+                                    <a href="departments_edit.php?id=<?= $department["DepartmentID"]?>"><button type="button" class="btn btn-warning"><i class="bi bi-pencil-fill"></i></button></a>
+                                    <a href="../../functions/employees/process_employee_delete.php?id=<?= $department["DepartmentID"]?>" onclick="return confirm('Bạn có chắc chắn muốn xoá nhân viên này không?')"><button type="button" class="btn btn-danger"><i class="bi bi-trash3-fill"></i></button></a>
                                 </div>
                             </div>
                         </div>
