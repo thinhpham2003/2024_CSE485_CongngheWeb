@@ -86,7 +86,7 @@ $employees_on_page = array_slice($employees, $start, $items_per_page);
                                         <p class="text-muted mb-0 mt-2"><i class="mdi mdi-google-maps font-size-15 align-middle pe-2 text-primary"></i><?= $e['Address']?></p>
                                     </div>
                                     <div class=" gap-2 pt-4">
-                                        <a href="profile.php?id=<?= $e["EmployeeID"]?>"><button type="button" class="btn btn-primary btn-sm w-50"><i class="bx bx-user me-1"></i> Profile</button></a>
+                                        <a href="profile.php?id=<?= $e["EmployeeID"]?>"><button type="button" class="btn btn-primary btn-sm w-50"><i class="bx bx-user me-1"></i> Thông tin</button></a>
                                     </div>
                                 </div>
                             </div>

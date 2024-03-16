@@ -67,7 +67,7 @@ $employee = getEmployeeById($id);
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Mật khẩu: </label>
-                <input type="text" value="" class="form-control" id="password" name="password">
+                <input type="password" value="" class="form-control" id="password" name="password">
             </div>
             <div class="mb-3">
                 <label for="role" class="form-label">Vai trò:</label>
